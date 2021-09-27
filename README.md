@@ -109,7 +109,7 @@ If you wish to test the codec, please use the following instructions as general 
 - ./PICSONG -i "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.enc" -o "Resources/n1_RGB_DECODED.3_2560_2048_1_0_8_0_0_1.raw" -cd 1 -video 0 -LUTFolder LUT/n1_lossless/
 ### Video – Lossy:
 - ./PICSONG -wl 5 -cp 2 -type 1 -qs 1 -i "Resources/video.raw" -o "Resources/video.enc" -cbWidth 64 -cbHeight 18 -cd 0 -xSize 4096 -ySize 2048 -video 1 -frames 2090 -numberOfStreams 20 -isRGB 1 -LUTFolder LUT/video_lossy/ -k 0
-- ./PICSONG -i "Resources/video.enc" -o "Resources/video_DEC.enc" -cd 1 -video 1 -numberOfStreams 20 -LUTFolder LUT/video_lossy/ -k 0
+- ./PICSONG -i "Resources/video.enc" -o "Resources/video_DEC.enc" -cd 1 -video 1 -numberOfStreams 20 -LUTFolder LUT/video_lossy/
 ### Video – Lossless:
 - ./PICSONG -wl 5 -cp 2 -type 0 -qs 1 -i "Resources/video.raw" -o "Resources/video.enc" -cbWidth 64 -cbHeight 18 -cd 0 -xSize 4096 -ySize 2048 -video 1 -frames 2090 -numberOfStreams 20 -isRGB 1 -LUTFolder LUT/video_lossless/ -k 0
-- ./PICSONG -i "Resources/video.enc" -o "Resources/video_DEC.enc" -cd 1 -video 1 -numberOfStreams 20 -LUTFolder LUT/video_lossless/ -k 0
+- ./PICSONG -i "Resources/video.enc" -o "Resources/video_DEC.enc" -cd 1 -video 1 -numberOfStreams 20 -LUTFolder LUT/video_lossless/
