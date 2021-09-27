@@ -16,9 +16,9 @@ First of all, all these instructions correspond to the Visual Studio Community 2
 
 We will first download the git repository and open it. There, before opening the CUDA_ImCod.sln file, you will need to navigate to CUDA_ImCod folder and update the file called CUDA_ImCod.vcxproj via your preferred editor, more specifically the sections where the CUDA props and targets are addressed:
 
-- Line 120: <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.props" />
+- Line 120: \<Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.props" />
 
-- Line 236: <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.targets" />
+- Line 236: \<Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.targets" />
 
 Replacing 10.2 with the CUDA version you have installed in your system (at the time of writing this guide, the latest version is 11.4).
 
