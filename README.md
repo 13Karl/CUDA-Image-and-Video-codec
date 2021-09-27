@@ -34,7 +34,7 @@ Next, under the CUDA C/C++ properties, update the **“Additional Include Direct
 
 Under **“Linker”** property, change the **“Additional Library Directories”** to include the right CUB path.
 
-After that, set the following System Wide Variable if you don’t have it yet:
+After that, set the following System Environment Variable if you don’t have it yet:
 
 **Variable name:** NVTOOLSEXT_PATH
 **Value:** C:\Program Files\NVIDIA Corporation\NvToolsExt\
