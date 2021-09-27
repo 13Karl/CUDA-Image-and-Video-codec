@@ -4,7 +4,7 @@
     <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>-h -wl 5 -cp 2 -type 0 -qs 1 -i "E:\PhD\CUDA\STEM-SC01.948_832_2048_1_0_8_0_0_0.raw" -o "E:\PhD\CUDA\STEM-SC01_ENC.948_832_2048_1_0_8_0_0_0.raw" -cbWidth 64 -cbHeight 18 -cd 0 -xSize 2048 -ySize 832 -video 1 -frames 948 -avoidSizeCheck 1 -components 1 -isRGB 0 -numberOfStreams 1 -LUTFolder E:\PhD\TestsNewBPCPacoModel\LUTS\STEMIndividualLossless\ -k 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments></LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
