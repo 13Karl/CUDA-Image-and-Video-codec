@@ -16,7 +16,7 @@ First of all, all these instructions correspond to the Visual Studio Community 2
 
 We will first download the git repository and then will navigate to CUDA_ImCod and open the CUDA_ImCod.sln file. Visual studio will popup, and, depending on the version used, it could prompt to update the solution to a newer version. Just accept the suggestion. Once you are in the solution, right-click on the CUDA_ImCod solution and click on properties.
 
-In the properties window, navigate to the **“VC++ Directories”** and modify the **“Include Directories”**, changing the **“cub”** folder to the one where you have your cub implementation (https://nvlabs.github.io/cub/). It is included as well within the source code of this project.
+In the properties window, navigate to the **“VC++ Directories”** and modify the **“Include Directories”**, changing the **“cub”** folder (or appending it to the end if the cub folder is not there already) to the one where you have your cub implementation (https://nvlabs.github.io/cub/). It is included as well within the source code of this project.
 
 Next, under the CUDA C/C++ properties, update the **“Additional Include Directories”** section with the right information on where the cub folder is. On this same CUDA C/C++ section, select **“Device”** and change the **“compute_61,sm_61”** to the appropriate values depending on the gpu, i.e.:
 
