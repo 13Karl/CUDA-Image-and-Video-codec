@@ -40,7 +40,7 @@ After that, set the following System Environment Variable if you don’t have it
 
 **Value:** C:\Program Files\NVIDIA Corporation\NvToolsExt\
 
-Next, copy the file called "nvToolsExt64_1.dll" located in the path "C:\Program Files\NVIDIA Corporation\NvToolsExt\bin\x64" to the x64\Release folder within the project.
+Next, copy the file called "nvToolsExt64_1.dll" located in the path "C:\Program Files\NVIDIA Corporation\NvToolsExt\bin\x64" to the x64\Release folder within the project (please, the x64 from the root of the solution, not inside the CUDA_ImCod folder).
 
 Finally, the program must run on the **“release” channel, on x64**. 
 
