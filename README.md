@@ -14,7 +14,15 @@ The guide is divided now in two different sections, one for Windows and another 
 
 First of all, all these instructions correspond to the Visual Studio Community 2019 version. Maybe in future versions, some or all of this steps will not be necessary. 
 
-We will first download the git repository and then will navigate to CUDA_ImCod and open the CUDA_ImCod.sln file. Visual studio will popup, and, depending on the version used, it could prompt to update the solution to a newer version. Just accept the suggestion. Once you are in the solution, right-click on the CUDA_ImCod solution and click on properties.
+We will first download the git repository and open it. There, before opening the CUDA_ImCod.sln file, you will need to navigate to CUDA_ImCod folder and update the file called CUDA_ImCod.vcxproj via your preferred editor, more specifically the sections where the CUDA props and targets are addressed:
+
+- Line 120: <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.props" />
+
+- Line 236: <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.targets" />
+
+Replacing 10.2 with the CUDA version you have installed in your system (at the time of writing this guide, the latest version is 11.4).
+
+Now is the time to open the CUDA_ImCod.sln file. Visual studio will popup, and, depending on the version used, it could prompt to update the solution to a newer version. Just accept the suggestion. Once you are in the solution, right-click on the CUDA_ImCod solution and click on properties.
 
 In the properties window, navigate to the **“VC++ Directories”** and modify the **“Include Directories”**, changing the **“cub”** folder (or appending it to the end if the cub folder is not there already) to the one where you have your cub implementation (https://nvlabs.github.io/cub/). It is included as well within the source code of this project.
 
@@ -31,13 +39,7 @@ After that, set the following System Wide Variable if you don’t have it yet:
 **Variable name:** NVTOOLSEXT_PATH
 **Value:** C:\Program Files\NVIDIA Corporation\NvToolsExt\
 
-Finally, the program must run on the **“release” channel, on x64**. If you happen to have a different CUDA version than the one used to generate the project (CUDA 10.2), you will need to update the file called CUDA_ImCod.vcxproj, more specifically the sections where the CUDA targets file is addressed:
-
-- Line 120: <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.props" />
-
-- Line 236: <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.targets" />
-
-Replacing 10.2 with the CUDA version you have installed in your system.
+Finally, the program must run on the **“release” channel, on x64**. 
 
 ## Linux Guide (Ubuntu)
 
