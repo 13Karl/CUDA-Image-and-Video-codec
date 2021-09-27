@@ -63,7 +63,7 @@ This is important: change the arch 75 code to the one that corresponds depending
 - 3060, 3070, 3080, 3090: compute_86,sm_86
 
 After that, run the following commands to compile and create the binary file:
-- cmake.
+- cmake .
 - cmake --build .
 
 This will generate a binary called PICSONG, which is the executable of this codec.
