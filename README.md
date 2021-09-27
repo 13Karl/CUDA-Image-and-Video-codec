@@ -37,6 +37,7 @@ Under **“Linker”** property, change the **“Additional Library Directories�
 After that, set the following System Environment Variable if you don’t have it yet:
 
 **Variable name:** NVTOOLSEXT_PATH
+
 **Value:** C:\Program Files\NVIDIA Corporation\NvToolsExt\
 
 Finally, the program must run on the **“release” channel, on x64**. 
