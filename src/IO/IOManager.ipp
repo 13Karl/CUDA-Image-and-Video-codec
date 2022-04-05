@@ -4,7 +4,9 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
-
+#include <cmath>
+#include <cstring>
+#include <algorithm>
 
 template<class T, class Y>
 inline IOManager<T, Y>::IOManager(std::string input, std::string output)
@@ -418,7 +420,7 @@ void IOManager<T, Y>::loadLUTUpgraded(int LUTNumberOfSubbands, int LUTContextRef
 	char* concatF;
 
 
-	int bitplaneInitialShifting = min((int)ceil(1 / qStep), 15);
+	int bitplaneInitialShifting = std::min((int)ceil(1 / qStep), 15);
 	int writtenInfo = 0;
 	int *maxLocalBitplane = (int*)malloc((numberOfWaveletLevels*LUTNumberOfSubbands) * sizeof(int) + 4);
 	bool in = 0;
