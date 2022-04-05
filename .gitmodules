@@ -1,0 +1,3 @@
+[submodule "ThirdParty/cub"]
+	path = ThirdParty/cub
+	url = https://github.com/NVIDIA/cub.git

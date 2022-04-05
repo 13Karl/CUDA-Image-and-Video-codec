@@ -1,74 +1,29 @@
-# CUDA-Image-and-Video-codec
+# CUDA image and video codec
 
-Codec created during my Ph.D. that processes image and video files using Nvidia GPUs. It is based on the JPEG2000 framework and includes the same features, although it is not compliant with it. To run the software, the requirements are as follows:
+Codec to processes image and video files using NVIDIA GPUs. It is based on the JPEG2000 framework and includes the same features, although it is not compliant with it. Further detail could be found in the following papers:
 
-- **Windows:** CUDA 10+ as well as Microsoft Visual Studio 2019+. For the development, I used Visual Studio Community 2019. The new version, 2021, is expected to be fully compatible with the project.
+* [GPU-oriented architecture for an end-to-end image/video codec based on JPEG2000](https://deic.uab.cat/~francesc/research/bpc_paco/2020_12-IEEE_A.pdf)
+* [Real-time 16K Video Coding on a GPU with Complexity Scalable BPC-PaCo](https://deic.uab.cat/~francesc/research/bpc_paco/2021_11-ELSEVIER_SPIC.pdf)
 
-- **Linux:** GCC 8+ and CUDA 10+ and CMake 3.10.2.  
+As per hardware requirements, a **NVIDIA GPU is required**. The ones tested are from series 1000, 2000 and 3000, using 6.1, 7.5 and 8.6 CC respectively. We do not guarantee compatibility with older GPUs. 
 
-As per hardware requirements, a **Nvidia GPU is required**. The ones tested are from series 1000, 2000 and 3000, using 6.1, 7.5 and 8.6 CC respectively. We do not guarantee compatibility with older GPUs. 
+## Prerequsites
 
-The guide is divided now in two different sections, one for Windows and another for Linux, with specific instructions on how-to compile. The run examples are provided after the compilation guide as they are the same regardless of the OS used.
+* CMake 3.18+ (needed for CUDA support as a native CMake language)
+* Ninja build system (needed to have the same build experience in Linux and Windows)
 
-## Windows guide
+## Building
 
-First of all, all these instructions correspond to the Visual Studio Community 2019 version. Maybe in future versions, some or all of this steps will not be necessary. 
+Run the following commands in Linux console or in Windows Visual Studio Command Prompt:
 
-We will first download the git repository and open it. There, before opening the CUDA_ImCod.sln file, you will need to navigate to CUDA_ImCod folder and update the file called CUDA_ImCod.vcxproj via your preferred editor, more specifically the sections where the CUDA props and targets are addressed:
+```
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -G Ninja ..
+ninja
+```
 
-- Line 120: \<Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.props" />
-
-- Line 236: \<Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.2.targets" />
-
-Replacing 10.2 with the CUDA version you have installed in your system (at the time of writing this guide, the latest version is 11.4).
-
-Now is the time to open the CUDA_ImCod.sln file. Visual studio will popup, and, depending on the version used, it could prompt to update the solution to a newer version. Just accept the suggestion. Once you are in the solution, right-click on the CUDA_ImCod solution and click on properties.
-
-In the properties window, navigate to the **“VC++ Directories”** and modify the **“Include Directories”**, changing the **“cub”** folder (or appending it to the end if the cub folder is not there already) to the one where you have your cub implementation (https://nvlabs.github.io/cub/). It is included as well within the source code of this project.
-
-Next, under the CUDA C/C++ properties, update the **“Additional Include Directories”** section with the right information on where the cub folder is. On this same CUDA C/C++ section, select **“Device”** and change the **“compute_61,sm_61”** to the appropriate values depending on the gpu, i.e.:
-
-- 1050, 1060, 1070, 1080: compute_61,sm_61
-- 2060, 2070, 2080: compute_75,sm_75
-- 3060, 3070, 3080, 3090: compute_86,sm_86
-
-Under **“Linker”** property, change the **“Additional Library Directories”** to include the right CUB path.
-
-After that, set the following System Environment Variable if you don’t have it yet:
-
-**Variable name:** NVTOOLSEXT_PATH
-
-**Value:** C:\Program Files\NVIDIA Corporation\NvToolsExt\
-
-Next, copy the file called "nvToolsExt64_1.dll" located in the path "C:\Program Files\NVIDIA Corporation\NvToolsExt\bin\x64" to the x64\Release folder within the project (please, the x64 from the root of the solution, not inside the CUDA_ImCod folder).
-
-Finally, the program must run on the **“release” channel, on x64**. 
-
-## Linux Guide (Ubuntu)
-
-For Linux, just download the source code and edit the CMakeLists.txt file. The important lines that must be edited are the following ones:
-
-- INCLUDE_DIRECTORIES("/media/Data/CUDA_SIMD_CMAKE/CUDA_ImCod/cub" "/media/Data/CUDA_SIMD_CMAKE/CUDA_ImCod/lib" "/usr/local/cuda/include" "/usr/local/cuda/lib64")
-
-- LINK_DIRECTORIES("/media/Data/CUDA_SIMD_CMAKE/CUDA_ImCod/cub" "/media/Data/CUDA_SIMD_CMAKE/CUDA_ImCod/lib" "/usr/local/cuda/include" "/usr/local/cuda/lib64")
-
-Changing the absolute paths to those that correspond depending on where you are storing the source code.
-
-- set (CMAKE_CUDA_FLAGS -ccbin\ "/usr/bin/gcc"\ -gencode=arch=compute_75,code=\\"sm_75,compute_75\\"\ -rdc=true\ -maxrregcount=0\ --machine\ 64\ -cudart\ static\ -use_fast_math\ -Xptxas\ -v\ -lineinfo )
-
-This is important: change the arch 75 code to the one that corresponds depending on your Nvidia GPU:
-
-- 1050, 1060, 1070, 1080: compute_61,sm_61
-- 2060, 2070, 2080: compute_75,sm_75
-- 3060, 3070, 3080, 3090: compute_86,sm_86
-
-After that, run the following commands to compile and create the binary file:
-- cmake .
-- cmake --build .
-
-This will generate a binary called PICSONG, which is the executable of this codec.
-
-## Codec instructions and examples
+## Evaluation
 
 To execute the codec, you can first access the different parameters it offers. If you execute the application with parameter “-h”, you will get the set of instructions available for it, which are:
 
@@ -102,14 +57,14 @@ Hence, these files are appropriate for the codec. As LUT files, which are side i
 If you wish to test the codec, please use the following instructions as general examples to code/decode in lossy/lossless mode each of the files. Examples are provided for the Linux version.
 
 ### Image – Lossy: 
-- ./PICSONG -wl 5 -cp 2 -type 1 -qs 1 -i "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.raw" -o "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.enc" -cbWidth 64 -cbHeight 18 -cd 0 -xSize 2048 -ySize 2560 -video 0 -isRGB 1 -LUTFolder LUT/n1_lossy/ -k 0
-- ./PICSONG -i "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.enc" -o "Resources/n1_RGB_DECODED.3_2560_2048_1_0_8_0_0_1.raw" -cd 1 -video 0 -LUTFolder LUT/n1_lossy/
+- ./picsong -wl 5 -cp 2 -type 1 -qs 1 -i "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.raw" -o "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.enc" -cbWidth 64 -cbHeight 18 -cd 0 -xSize 2048 -ySize 2560 -video 0 -isRGB 1 -LUTFolder LUT/n1_lossy/ -k 0
+- ./picsong -i "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.enc" -o "Resources/n1_RGB_DECODED.3_2560_2048_1_0_8_0_0_1.raw" -cd 1 -video 0 -LUTFolder LUT/n1_lossy/
 ### Image – Lossless:
-- ./PICSONG -wl 5 -cp 2 -type 0 -qs 1 -i "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.raw" -o "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.enc" -cbWidth 64 -cbHeight 18 -cd 0 -xSize 2048 -ySize 2560 -video 0 -isRGB 1 -LUTFolder LUT/n1_lossless/ -k 0
-- ./PICSONG -i "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.enc" -o "Resources/n1_RGB_DECODED.3_2560_2048_1_0_8_0_0_1.raw" -cd 1 -video 0 -LUTFolder LUT/n1_lossless/
+- ./picsong -wl 5 -cp 2 -type 0 -qs 1 -i "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.raw" -o "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.enc" -cbWidth 64 -cbHeight 18 -cd 0 -xSize 2048 -ySize 2560 -video 0 -isRGB 1 -LUTFolder LUT/n1_lossless/ -k 0
+- ./picsong -i "Resources/n1_RGB.3_2560_2048_1_0_8_0_0_1.enc" -o "Resources/n1_RGB_DECODED.3_2560_2048_1_0_8_0_0_1.raw" -cd 1 -video 0 -LUTFolder LUT/n1_lossless/
 ### Video – Lossy:
-- ./PICSONG -wl 5 -cp 2 -type 1 -qs 1 -i "Resources/video.raw" -o "Resources/video.enc" -cbWidth 64 -cbHeight 18 -cd 0 -xSize 4096 -ySize 2048 -video 1 -frames 2090 -numberOfStreams 20 -isRGB 1 -LUTFolder LUT/video_lossy/ -k 0
-- ./PICSONG -i "Resources/video.enc" -o "Resources/video_DEC.raw" -cd 1 -video 1 -numberOfStreams 20 -LUTFolder LUT/video_lossy/
+- ./picsong -wl 5 -cp 2 -type 1 -qs 1 -i "Resources/video.raw" -o "Resources/video.enc" -cbWidth 64 -cbHeight 18 -cd 0 -xSize 4096 -ySize 2048 -video 1 -frames 2090 -numberOfStreams 20 -isRGB 1 -LUTFolder LUT/video_lossy/ -k 0
+- ./picsong -i "Resources/video.enc" -o "Resources/video_DEC.raw" -cd 1 -video 1 -numberOfStreams 20 -LUTFolder LUT/video_lossy/
 ### Video – Lossless:
-- ./PICSONG -wl 5 -cp 2 -type 0 -qs 1 -i "Resources/video.raw" -o "Resources/video.enc" -cbWidth 64 -cbHeight 18 -cd 0 -xSize 4096 -ySize 2048 -video 1 -frames 2090 -numberOfStreams 20 -isRGB 1 -LUTFolder LUT/video_lossless/ -k 0
-- ./PICSONG -i "Resources/video.enc" -o "Resources/video_DEC.raw" -cd 1 -video 1 -numberOfStreams 20 -LUTFolder LUT/video_lossless/
+- ./picsong -wl 5 -cp 2 -type 0 -qs 1 -i "Resources/video.raw" -o "Resources/video.enc" -cbWidth 64 -cbHeight 18 -cd 0 -xSize 4096 -ySize 2048 -video 1 -frames 2090 -numberOfStreams 20 -isRGB 1 -LUTFolder LUT/video_lossless/ -k 0
+- ./picsong -i "Resources/video.enc" -o "Resources/video_DEC.raw" -cd 1 -video 1 -numberOfStreams 20 -LUTFolder LUT/video_lossless/
